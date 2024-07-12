@@ -6,8 +6,6 @@ public class Main {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		// 추가커밋 테스트
-		
 		while (true) {
 			System.out.printf("명령어) ");
 			
