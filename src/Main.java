@@ -32,8 +32,8 @@ public class Main {
 				String body = sc.nextLine();
 				
 				lastArticleId++;
-				
-				Article article = new Article(lastArticleId, title, body);
+		        
+				Article article = new Article(lastArticleId, Util.getDateStr(), title, body);
 				
 				articles.add(article);
 				
@@ -46,11 +46,11 @@ public class Main {
 					continue;
 				}
 				
-				System.out.println("번호	|	제목");
+				System.out.println("번호	|	제목	|	작성일");
 				
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d	|	%s\n", article.id, article.title);
+					System.out.printf("%d	|	%s	|	%s\n", article.id, article.title, article.regDate);
 				}
 				
 			} else if (cmd.startsWith("article detail ")) {
@@ -82,6 +82,7 @@ public class Main {
 				}
 				
 				System.out.printf("번호 : %d\n", foundArticle.id);
+				System.out.printf("작성일 : %s\n", foundArticle.regDate);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.body);
 				
@@ -168,11 +169,13 @@ public class Main {
 
 class Article {
 	int id;
+	String regDate;
 	String title;
 	String body;
 	
-	public Article(int id, String title, String body) {
+	public Article(int id, String regDate, String title, String body) {
 		this.id = id;
+		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
 	}
