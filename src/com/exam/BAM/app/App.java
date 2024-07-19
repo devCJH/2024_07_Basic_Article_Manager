@@ -122,6 +122,44 @@ public class App {
 				System.out.printf("내용 : %s\n", foundArticle.getBody());
 				System.out.printf("조회수 : %d\n", foundArticle.getViewCnt());
 				
+			} else if (cmd.startsWith("article modify ")) {
+				String[] cmdBits = cmd.split(" ");
+
+				int id = 0;
+
+				try {
+					id = Integer.parseInt(cmdBits[2]);
+				} catch (NumberFormatException e) {
+					System.out.println("명령어가 올바르지 않습니다");
+					continue;
+				} catch (Exception e) {
+					System.out.println("error : " + e);
+				}
+
+				Article foundArticle = null;
+
+				for (Article article : articles){
+					if (id == article.getId()) {
+						foundArticle = article;
+						break;
+					}
+				}
+
+				if (foundArticle == null) {
+					System.out.println(id + "번 게시물은 존재하지 않습니다");
+					continue;
+				}
+
+				System.out.printf("수정할 제목 : ");
+				String title = sc.nextLine();
+				System.out.printf("수정할 내용 : ");
+				String body = sc.nextLine();
+
+				foundArticle.setTitle(title);
+				foundArticle.setBody(body);
+
+				System.out.println(id + "번 게시물을 수정했습니다");
+
 			} else if (cmd.startsWith("article delete ")) {
 				String[] cmdBits = cmd.split(" ");
 
