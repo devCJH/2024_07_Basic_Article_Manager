@@ -7,34 +7,57 @@ import java.util.Scanner;
 import com.exam.BAM.dto.Article;
 import com.exam.BAM.util.Util;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 
-	private Scanner sc;
-	private int lastArticleId;
 	private List<Article> articles;
 	
 	public ArticleController(Scanner sc) {
 		this.sc = sc;
-		this.lastArticleId = 0;
+		this.lastId = 0;
 		this.articles = new ArrayList<>();
 	}
 
-	public void doWrite() {
+	@Override
+	public void doAction(String cmd, String methodName) {
+		this.cmd = cmd;
+		
+		switch (methodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList();
+			break;
+		case "detail":
+			showDetail();
+			break;
+		case "modify":
+			doModify();
+			break;
+		case "delete":
+			doDelete();
+			break;
+		default:
+			System.out.println("존재하지 않는 명령어 입니다");
+		}
+	}
+	
+	private void doWrite() {
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
 		System.out.printf("내용 : ");
 		String body = sc.nextLine();
 		
-		lastArticleId++;
+		lastId++;
         
-		Article article = new Article(lastArticleId, Util.getDateStr(), title, body, 0);
+		Article article = new Article(lastId, Util.getDateStr(), title, body, 0);
 		
 		articles.add(article);
 		
-		System.out.println(lastArticleId + "번 글이 생성되었습니다");
+		System.out.println(lastId + "번 글이 생성되었습니다");
 	}
 	
-	public void showList(String cmd) {
+	private void showList() {
 		if (articles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 			return;
@@ -69,7 +92,7 @@ public class ArticleController {
 		}
 	}
 
-	public void showDetail(String cmd) {
+	private void showDetail() {
 		int id = getIdByCmd(cmd);
 		
 		if (id == 0) {
@@ -94,7 +117,7 @@ public class ArticleController {
 		
 	}
 
-	public void doModify(String cmd) {
+	private void doModify() {
 		int id = getIdByCmd(cmd);
 		
 		if (id == 0) {
@@ -120,7 +143,7 @@ public class ArticleController {
 		System.out.println(id + "번 게시물을 수정했습니다");
 	}
 
-	public void doDelete(String cmd) {
+	private void doDelete() {
 		int id = getIdByCmd(cmd);
 		
 		if (id == 0) {
@@ -148,6 +171,8 @@ public class ArticleController {
 			return id;
 		} catch (NumberFormatException e) {
 			return 0;
+		} catch (Exception e) {
+			return 0;
 		}
 	}
 
@@ -160,10 +185,11 @@ public class ArticleController {
 		return null;
 	}
 	
+	@Override
 	public void makeTestData() {
 		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
 		for (int i = 1; i <= 3; i++) {
-			articles.add(new Article(++lastArticleId, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
+			articles.add(new Article(++lastId, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
 		}		
 	}
 }
