@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.exam.BAM.container.Container;
 import com.exam.BAM.dto.Article;
+import com.exam.BAM.dto.Member;
 import com.exam.BAM.util.Util;
 
 public class ArticleController extends Controller {
@@ -94,7 +95,10 @@ public class ArticleController extends Controller {
 		
 		for (int i = printArticles.size() - 1; i >= 0; i--) {
 			Article article = printArticles.get(i);
-			System.out.printf("%d	|	%s	|	%s	|	%s	|	%d\n", article.getId(), article.getTitle(), article.getRegDate(), article.getMemberId(), article.getViewCnt());
+			
+			String writerName = getWriterName(article.getMemberId());
+			
+			System.out.printf("%d	|	%s	|	%s	|	%s	|	%d\n", article.getId(), article.getTitle(), article.getRegDate(), writerName, article.getViewCnt());
 		}
 	}
 
@@ -115,9 +119,11 @@ public class ArticleController extends Controller {
 		
 		foundArticle.increaseViewCnt();
 		
+		String writerName = getWriterName(foundArticle.getMemberId());
+		
 		System.out.printf("번호 : %d\n", foundArticle.getId());
 		System.out.printf("작성일 : %s\n", foundArticle.getRegDate());
-		System.out.printf("작성자 : %s\n", foundArticle.getMemberId());
+		System.out.printf("작성자 : %s\n", writerName);
 		System.out.printf("제목 : %s\n", foundArticle.getTitle());
 		System.out.printf("내용 : %s\n", foundArticle.getBody());
 		System.out.printf("조회수 : %d\n", foundArticle.getViewCnt());
@@ -144,6 +150,11 @@ public class ArticleController extends Controller {
 			return;
 		}
 
+		if (loginedMember.getId() != foundArticle.getMemberId()) {
+			System.out.println("해당 게시물에 대한 권한이 없습니다");
+			return;
+		}
+		
 		System.out.printf("수정할 제목 : ");
 		String title = sc.nextLine();
 		System.out.printf("수정할 내용 : ");
@@ -175,9 +186,23 @@ public class ArticleController extends Controller {
 			return;
 		}
 		
+		if (loginedMember.getId() != foundArticle.getMemberId()) {
+			System.out.println("해당 게시물에 대한 권한이 없습니다");
+			return;
+		}
+		
 		articles.remove(foundArticle);
 		
 		System.out.println(id + "번 게시물을 삭제했습니다");
+	}
+	
+	private String getWriterName(int memberId) {
+		for (Member member : Container.members) {
+			if (memberId == member.getId()) {
+				return member.getLoginId();
+			}
+		}
+		return null;
 	}
 	
 	private int getIdByCmd(String cmd) {
