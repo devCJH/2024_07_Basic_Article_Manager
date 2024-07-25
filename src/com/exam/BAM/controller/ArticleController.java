@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.exam.BAM.container.Container;
 import com.exam.BAM.dto.Article;
 import com.exam.BAM.util.Util;
 
@@ -14,7 +15,7 @@ public class ArticleController extends Controller {
 	public ArticleController(Scanner sc) {
 		this.sc = sc;
 		this.lastId = 0;
-		this.articles = new ArrayList<>();
+		this.articles = Container.articles;
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class ArticleController extends Controller {
 		
 		lastId++;
         
-		Article article = new Article(lastId, Util.getDateStr(), title, body, 0);
+		Article article = new Article(lastId, Util.getDateStr(), loginedMember.getId(), title, body, 0);
 		
 		articles.add(article);
 		
@@ -89,11 +90,11 @@ public class ArticleController extends Controller {
 			}
 		}
 		
-		System.out.println("번호	|	제목	|		작성일		|	조회수");
+		System.out.println("번호	|	제목	|		작성일		|	작성자	|	조회수");
 		
 		for (int i = printArticles.size() - 1; i >= 0; i--) {
 			Article article = printArticles.get(i);
-			System.out.printf("%d	|	%s	|	%s	|	%d\n", article.getId(), article.getTitle(), article.getRegDate(), article.getViewCnt());
+			System.out.printf("%d	|	%s	|	%s	|	%s	|	%d\n", article.getId(), article.getTitle(), article.getRegDate(), article.getMemberId(), article.getViewCnt());
 		}
 	}
 
@@ -116,6 +117,7 @@ public class ArticleController extends Controller {
 		
 		System.out.printf("번호 : %d\n", foundArticle.getId());
 		System.out.printf("작성일 : %s\n", foundArticle.getRegDate());
+		System.out.printf("작성자 : %s\n", foundArticle.getMemberId());
 		System.out.printf("제목 : %s\n", foundArticle.getTitle());
 		System.out.printf("내용 : %s\n", foundArticle.getBody());
 		System.out.printf("조회수 : %d\n", foundArticle.getViewCnt());
@@ -204,7 +206,7 @@ public class ArticleController extends Controller {
 	public void makeTestData() {
 		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
 		for (int i = 1; i <= 3; i++) {
-			articles.add(new Article(++lastId, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
+			articles.add(new Article(++lastId, Util.getDateStr(), (int) (Math.random() * 3) + 1, "제목" + i, "내용" + i, i * 10));
 		}		
 	}
 }

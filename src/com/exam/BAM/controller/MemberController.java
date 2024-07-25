@@ -1,9 +1,9 @@
 package com.exam.BAM.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.exam.BAM.container.Container;
 import com.exam.BAM.dto.Member;
 import com.exam.BAM.util.Util;
 
@@ -14,7 +14,7 @@ public class MemberController extends Controller {
 	public MemberController(Scanner sc) {
 		this.sc = sc;
 		this.lastId = 0;
-		this.members = new ArrayList<>();
+		this.members = Container.members;
 	}
 	
 	@Override
