@@ -42,6 +42,25 @@ public class App {
 			String controllerName = cmdBits[0];
 			String methodName = cmdBits[1];
 			
+			switch (methodName) {
+			case "write":
+			case "modify":
+			case "delete":
+			case "logout":
+				if (Controller.loginedMember == null) {
+					System.out.println("로그인부터 하고 와");
+					continue;
+				}
+				break;
+			case "join":
+			case "login":
+				if (Controller.loginedMember != null) {
+					System.out.println("로그아웃부터 하고 와");
+					continue;
+				}
+				break;
+			}
+			
 			Controller controller = null;
 			
 			if (controllerName.equals("member")) {
