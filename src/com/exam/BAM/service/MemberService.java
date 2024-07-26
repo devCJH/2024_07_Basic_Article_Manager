@@ -18,5 +18,9 @@ public class MemberService {
 	public void joinMember(String loginId, String loginPw, String name) {
 		memberDao.joinMember(loginId, loginPw, name);
 	}
+
+	public String getWriterName(int memberId) {
+		return memberDao.getWriterName(memberId);
+	}
 	
 }

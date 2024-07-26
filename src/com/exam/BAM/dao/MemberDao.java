@@ -28,4 +28,13 @@ public class MemberDao {
 		lastId++;
 		members.add(new Member(lastId, Util.getDateStr(), loginId, loginPw, name));
 	}
+
+	public String getWriterName(int memberId) {
+		for (Member member : members) {
+			if (memberId == member.getId()) {
+				return member.getLoginId();
+			}
+		}
+		return null;
+	}
 }
