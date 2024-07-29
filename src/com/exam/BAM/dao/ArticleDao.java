@@ -3,7 +3,6 @@ package com.exam.BAM.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.exam.BAM.container.Container;
 import com.exam.BAM.dto.Article;
 import com.exam.BAM.util.Util;
 
@@ -12,7 +11,7 @@ public class ArticleDao {
 	private int lastId;
 	
 	public ArticleDao() {
-		this.articles = Container.articles;
+		this.articles = new ArrayList<>();
 		this.lastId = 0;
 	}
 

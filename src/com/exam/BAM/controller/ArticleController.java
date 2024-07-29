@@ -3,6 +3,7 @@ package com.exam.BAM.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import com.exam.BAM.container.Container;
 import com.exam.BAM.dto.Article;
 import com.exam.BAM.service.ArticleService;
 import com.exam.BAM.service.MemberService;
@@ -14,8 +15,8 @@ public class ArticleController extends Controller {
 	
 	public ArticleController(Scanner sc) {
 		this.sc = sc;
-		this.articleService = new ArticleService();
-		this.memberService = new MemberService();
+		this.articleService = Container.articleService;
+		this.memberService = Container.memberService;
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package com.exam.BAM.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.exam.BAM.container.Container;
 import com.exam.BAM.dto.Member;
 import com.exam.BAM.util.Util;
 
@@ -11,7 +11,7 @@ public class MemberDao {
 	private int lastId;
 	
 	public MemberDao() {
-		this.members = Container.members;
+		this.members = new ArrayList<>();
 		this.lastId = 0;
 	}
 

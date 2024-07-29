@@ -1,5 +1,6 @@
 package com.exam.BAM.service;
 
+import com.exam.BAM.container.Container;
 import com.exam.BAM.dao.MemberDao;
 import com.exam.BAM.dto.Member;
 
@@ -8,7 +9,7 @@ public class MemberService {
 	private MemberDao memberDao;
 	
 	public MemberService() {
-		this.memberDao = new MemberDao();
+		this.memberDao = Container.memberDao;
 	}
 	
 	public Member getMemberByLoginId(String loginId) {

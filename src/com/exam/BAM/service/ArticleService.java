@@ -2,6 +2,7 @@ package com.exam.BAM.service;
 
 import java.util.List;
 
+import com.exam.BAM.container.Container;
 import com.exam.BAM.dao.ArticleDao;
 import com.exam.BAM.dto.Article;
 
@@ -10,7 +11,7 @@ public class ArticleService {
 	private ArticleDao articleDao;
 	
 	public ArticleService() {
-		this.articleDao = new ArticleDao();
+		this.articleDao = Container.articleDao;
 	}
 
 	public void writeArticle(int memberId, String title, String body, int viewCnt) {
